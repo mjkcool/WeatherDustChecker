@@ -50,9 +50,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="초미세먼지 상태"
-                    android:textColor="#D1C136"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
+                    android:textColor="#000000"
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/dust_pm25_intensity_text"
@@ -60,8 +59,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="수치"
-                    android:textColor="#000000"
-                    android:textSize="20dp" />
+                    android:textColor="#D1C136"
+                    android:textSize="22dp"
+                    android:textStyle="bold"/>
 
                 <Space
                     android:layout_width="match_parent"
@@ -73,9 +73,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="미세먼지 상태"
-                    android:textColor="#D1C136"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
+                    android:textColor="#000000"
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/dust_pm10_intensity_text"
@@ -83,8 +82,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="수치"
-                    android:textColor="#000000"
-                    android:textSize="20dp" />
+                    android:textColor="#D1C136"
+                    android:textSize="22dp"
+                    android:textStyle="bold"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

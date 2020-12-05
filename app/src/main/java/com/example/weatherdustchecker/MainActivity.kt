@@ -17,9 +17,10 @@ class MainActivity : AppCompatActivity() {
         val transaction = manager.beginTransaction()
 
         transaction.add(R.id.fragment_container,
-                WeatherPageFragment.newInstnace(37.58, 127.0))
+                DustPageFragment.newInstnace(37.58, 127.0))
         transaction.commit()
-    }
 
+
+    }
 
 }
