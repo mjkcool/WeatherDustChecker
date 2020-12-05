@@ -1,6 +1,7 @@
 package com.example.weatherdustchecker
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +42,8 @@ class WeatherPageFragment:Fragment(){
                 val mapper = jacksonObjectMapper()
                 val data = mapper?.readValue<OpenWeatherAPIJSONResponse>(result)
 
-                val temp = data.main.get("temp")
+                val temp = data.main.get("temp") //온도
+                Log.d("mytag", "온도-${temp}")
                 tempText.text = temp
 
                 val id = data.weather[0].get("id")

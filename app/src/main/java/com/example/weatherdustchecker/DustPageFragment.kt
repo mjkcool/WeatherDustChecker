@@ -1,6 +1,7 @@
 package com.example.weatherdustchecker
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +51,8 @@ class DustPageFragment : Fragment() {
             var pm25Node = iaqiNode?.get("pm25")
             var pm10 = pm10Node?.get("v")?.asInt()
             var pm25 = pm25Node?.get("v")?.asInt()
+
+            Log.d("mytag", "초미세-${pm25}, 미세-${pm10}")
 
             // (2)
             var pm10Status = checkCategory(pm10)
