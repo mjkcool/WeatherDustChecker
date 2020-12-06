@@ -9,6 +9,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -54,28 +55,17 @@ class WeatherPageFragment:Fragment(){
         val apiCallForData = apiService.getWeatherStatusInfo(APIKey.OpenWeatherAPIKey, lat, lon)
 
         apiCallForData.enqueue(object : Callback<OpenWeatherAPIJSONResponseFromGSON>{
-            override fun onResponse(
+            /*
+            요청을 Queue에 쌓음
+            네트워크 요청은 비동기로 처리해야함
+
+             */
+            override fun onResponse( //정상적인 요청에 대한 응답
                 call: Call<OpenWeatherAPIJSONResponseFromGSON>,
                 response: Response<OpenWeatherAPIJSONResponseFromGSON>
             ) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onFailure(call: Call<OpenWeatherAPIJSONResponseFromGSON>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-        })
-
-
-        /*
-        val url = "http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKey.OpenWeatherAPIKey}&units=metric"
-
-        val apiCallback = object : APICall.APICallback{
-            override fun onComplete(result: String) {
-                //역직렬화 (JSON)
-                val mapper = jacksonObjectMapper()
-                val data = mapper?.readValue<OpenWeatherAPIJSONResponse>(result)
+                val data : OpenWeatherAPIJSONResponseFromGSON
+                    = response.body() as OpenWeatherAPIJSONResponseFromGSON
 
                 val temp = data.main.get("temp") //온도
                 Log.d("mytag", "온도-${temp}")
@@ -116,10 +106,13 @@ class WeatherPageFragment:Fragment(){
                     }
                 }
             }
-        }
-        val call = APICall(apiCallback)
-        call.execute(URL(url))
-        */
+
+            override fun onFailure(call: Call<OpenWeatherAPIJSONResponseFromGSON>,
+                                   t: Throwable) {
+                Toast.makeText(context, "데이터 불러오기에 실패했습니다.\n${t.message}", Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
     companion object{
