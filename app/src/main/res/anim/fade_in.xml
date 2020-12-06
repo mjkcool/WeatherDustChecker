@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/accelerate_interpolator"
+    android:fillAfter="true">
+
+<!--    투명도 애님-->
+    <alpha
+        android:duration="1000"
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0"/>
+<!--    위치 이동 애님-->
+    <translate
+        android:duration="1000"
+        android:fromYDelta="10%"
+        android:toYDelta="0%"/>
+</set>

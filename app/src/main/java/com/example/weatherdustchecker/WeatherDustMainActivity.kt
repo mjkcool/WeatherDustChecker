@@ -39,7 +39,6 @@ class WeatherDustMainActivity : AppCompatActivity() {
 
         mPager = findViewById<ViewPager>(R.id.pager)
 
-
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         locationListener = object : LocationListener{
@@ -58,9 +57,11 @@ class WeatherDustMainActivity : AppCompatActivity() {
                     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
                     override fun onPageSelected(position: Int) { //페이지 전환 완료 시 콜백
                         if(position == 0){
-                            Toast.makeText(this@WeatherDustMainActivity, "날씨 페이지입니다.", Toast.LENGTH_SHORT).show()
+                            val fragment = mPager.adapter?.instantiateItem(mPager, position) as WeatherPageFragment
+                            fragment.startAnimation()
                         }else if(position ==1){
-                            Toast.makeText(this@WeatherDustMainActivity, "미세먼지 페이지입니다.", Toast.LENGTH_SHORT).show()
+                            val fragment = mPager.adapter?.instantiateItem(mPager, position) as DustPageFragment
+                            fragment.startAnimation()
                         }
                     }
                 })

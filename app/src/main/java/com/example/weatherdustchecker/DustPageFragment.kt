@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -116,5 +118,10 @@ class DustPageFragment : Fragment() {
 
             return fragment
         }
+    }
+
+    fun startAnimation(){
+        val fadeIn : Animation = AnimationUtils.loadAnimation(activity, R.anim.fade_in)
+        statusImage.startAnimation(fadeIn)
     }
 }

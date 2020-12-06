@@ -5,15 +5,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.net.URL
 
 class WeatherPageFragment:Fragment(){
+    lateinit var weatherImage : ImageView
+    lateinit var statusText : TextView
+    lateinit var tempText : TextView
 
     @JsonIgnoreProperties(ignoreUnknown=true)
     data class OpenWeatherAPIJSONResponse(val main: Map<String, String>, val weather: List<Map<String, String>>)
@@ -28,12 +38,37 @@ class WeatherPageFragment:Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val weatherImage = view.findViewById<ImageView>(R.id.weather_icon)
-        val statusText = view.findViewById<TextView>(R.id.weather_status_title)
-        val tempText = view.findViewById<TextView>(R.id.weather_temp_text)
+        weatherImage = view.findViewById<ImageView>(R.id.weather_icon)
+        statusText = view.findViewById<TextView>(R.id.weather_status_title)
+        tempText = view.findViewById<TextView>(R.id.weather_temp_text)
 
         val lat = arguments!!.getDouble("lat") //위도
         val lon = arguments!!.getDouble("lon") //경도
+
+        //GSON
+        val retrofit = Retrofit.Builder() //생성자X 빌더 객체를 이용해 객체 생성
+            .baseUrl("http://api.openweathermap.org")
+            .addConverterFactory(GsonConverterFactory.create()).build()
+
+        val apiService : WeatherAPIService = retrofit.create(WeatherAPIService::class.java)
+        val apiCallForData = apiService.getWeatherStatusInfo(APIKey.OpenWeatherAPIKey, lat, lon)
+
+        apiCallForData.enqueue(object : Callback<OpenWeatherAPIJSONResponseFromGSON>{
+            override fun onResponse(
+                call: Call<OpenWeatherAPIJSONResponseFromGSON>,
+                response: Response<OpenWeatherAPIJSONResponseFromGSON>
+            ) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onFailure(call: Call<OpenWeatherAPIJSONResponseFromGSON>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+
+        /*
         val url = "http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKey.OpenWeatherAPIKey}&units=metric"
 
         val apiCallback = object : APICall.APICallback{
@@ -84,6 +119,7 @@ class WeatherPageFragment:Fragment(){
         }
         val call = APICall(apiCallback)
         call.execute(URL(url))
+        */
     }
 
     companion object{
@@ -97,5 +133,10 @@ class WeatherPageFragment:Fragment(){
 
             return fragment
         }
+    }
+
+    fun startAnimation(){
+        val fadeIn : Animation = AnimationUtils.loadAnimation(activity, R.anim.fade_in)
+        weatherImage.startAnimation(fadeIn)
     }
 }
